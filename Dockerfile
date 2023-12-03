@@ -6,8 +6,8 @@ FROM ghcr.io/linuxserver/baseimage-alpine:3.20
 ARG BUILD_DATE
 ARG VERSION
 ARG AIRSONIC_ADVANCED_RELEASE
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="thespad"
+LABEL build_version="airsonic-advanced version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="kagemomiji"
 
 # environment settings
 ENV AIRSONIC_ADVANCED_HOME="/app/airsonic" \
@@ -21,19 +21,19 @@ RUN \
     flac \
     fontconfig \
     lame \
-    openjdk11-jre \
+    openjdk17-jre \
     ttf-dejavu \
     vorbis-tools && \
   echo "**** install airsonic advanced ****" && \
   if [ -z ${AIRSONIC_ADVANCED_RELEASE+x} ]; then \
-    AIRSONIC_ADVANCED_RELEASE=$(curl -sX GET "https://api.github.com/repos/airsonic-advanced/airsonic-advanced/releases" \
+    AIRSONIC_ADVANCED_RELEASE=$(curl -sX GET "https://api.github.com/repos/kagemomiji/airsonic-advanced/releases" \
     | awk '/tag_name/{print $4;exit}' FS='[""]'); \
   fi && \
   mkdir -p \
     ${AIRSONIC_ADVANCED_HOME} && \
   curl -o \
   ${AIRSONIC_ADVANCED_HOME}/airsonic.war -L \
-    "https://github.com/airsonic-advanced/airsonic-advanced/releases/download/${AIRSONIC_ADVANCED_RELEASE}/airsonic.war" && \
+    "https://github.com/kagemomiji/airsonic-advanced/releases/download/${AIRSONIC_ADVANCED_RELEASE}/airsonic.war" && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
   echo "**** cleanup ****" && \
   rm -rf \
